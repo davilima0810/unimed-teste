@@ -23,14 +23,13 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   handleOnChange?: (value: any) => any;
   handleOnFocus?: () => any;
   handleOnBlur?: () => any;
-  iconRight?: any;
   onClickIconRight?: () => void;
   onClickIconLeft?: () => void;
   isSelect?: boolean;
   isError?: boolean;
 }
 
-const Input = ({
+const InputSearch = ({
   label = "",
   assistiveText,
   iconLeft = "",
@@ -41,7 +40,6 @@ const Input = ({
   isError,
   required,
   className,
-  iconRight = "",
   onClickIconLeft,
   onClickIconRight,
   isSelect,
@@ -52,19 +50,15 @@ const Input = ({
 }: InputProps) => {
   return (
     <S.Container>
-      <S.Title>{label}</S.Title>
-      <S.InputMaterial placeholder={rest.placeholder} type={rest.type}>
-        {isError && (
-          <ReactSVG
-            src={"/assets/icons/x-red.svg"}
-            wrapper="div"
-            className="iconLeftBtn"
-            aria-label="iconLabel"
-          />
-        )}
-      </S.InputMaterial>
+      <S.Input {...rest}/>
+      <S.Icon
+        src={"/assets/icons/search.svg"}
+        wrapper="div"
+        className="iconRightBtn"
+        aria-label="iconLabel"
+      />
     </S.Container>
   );
 }
 
-export default Input;
+export default InputSearch;

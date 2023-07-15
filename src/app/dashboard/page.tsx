@@ -1,10 +1,8 @@
-import Sidebar from '@/components/organisms/sidebar';
 import React from 'react';
-
-// import { Container } from './styles';
+import HomeTemplate from '@/templates/HomeTemplate';
 
 const dashboard: React.FC = () => {
-  return <h1>Teste</h1>;
+  return <HomeTemplate />;
 }
 
 export default dashboard;

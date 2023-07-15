@@ -2,7 +2,7 @@ import { Inter } from 'next/font/google'
 
 import StyledComponentsRegistry from '../../lib/library'
 
-import Sidebar from '@/components/organisms/sidebar';
+import Sidebar from '@/components/organisms/Sidebar';
 
 import React from 'react'
 

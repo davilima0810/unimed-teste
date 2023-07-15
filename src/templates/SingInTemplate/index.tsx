@@ -63,7 +63,7 @@ export default function SingInTemplate() {
               <Input label='Senha' placeholder='Informe sua senha' type='password'/>
               <Button
                 style={{backgroundColor: "#00995d"}}
-                iconLeft={"assets/icons/log-in-white.svg"}
+                iconLeft={"/assets/icons/log-in-white.svg"}
                 onClick={()=>{
                   // formik.handleSubmit();
                   route.push("/dashboard");
@@ -73,7 +73,7 @@ export default function SingInTemplate() {
               </Button>
               <Button
                 style={{backgroundColor: "#9E9E9E"}}
-                iconLeft={"assets/icons/user-plus-white.svg"}
+                iconLeft={"/assets/icons/user-plus-white.svg"}
                 onClick={()=>setRegisterForm(!registerForm)}
               >
                 Não tenho conta
@@ -87,13 +87,13 @@ export default function SingInTemplate() {
               <Input label='Senha' placeholder='Confirme sua senha' type='password'/>
               <Button
                 style={{backgroundColor: "#00995d"}}
-                iconLeft={"assets/icons/user-check-white.svg"}
+                iconLeft={"/assets/icons/user-check-white.svg"}
               >
                 Cadastrar
               </Button>
               <Button
                 style={{backgroundColor: "#9E9E9E"}}
-                iconLeft={"assets/icons/arrow-left-white.svg"}
+                iconLeft={"/assets/icons/arrow-left-white.svg"}
                 onClick={()=>setRegisterForm(!registerForm)}
               >
                 Voltar

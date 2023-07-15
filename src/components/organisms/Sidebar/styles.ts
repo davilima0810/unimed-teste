@@ -39,6 +39,7 @@ export const BarTop = styled.div`
   display: flex;
   width: 100%;
   height: 15%;
+  margin-bottom: 3rem;
 `;
 
 export const DivTitle = styled.div`
@@ -50,7 +51,7 @@ export const DivTitle = styled.div`
 
 export const Title = styled.h1`
   font-size: 3.6rem;
-  font-weight: 600;
+  font-weight: 700;
 `
 
 export const SubTitle = styled.h3`
@@ -85,7 +86,7 @@ export const Profile = styled.div`
   height: 4.2rem;
   border-radius: 50%;
   border: 3px solid #DFDFDF;
-  background-image: url('assets/img/perfil.png');
+  background-image: url('/assets/img/perfil.png');
 
   background-repeat: no-repeat;
   -webkit-background-size: cover;
@@ -99,6 +100,7 @@ export const Profile = styled.div`
 export const ImageLogo = styled.img`
   width: 171px;
   height: 80px;
+  margin-bottom: 3rem;
 `;
 
 export const listSidebar = styled.ul`
