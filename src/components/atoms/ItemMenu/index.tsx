@@ -27,7 +27,7 @@ const ItemMenu : React.FC<ButtonProps> = ({
     >
       {!!iconLeft && (
         <ReactSVG
-          src={icon}
+          src={icon ? icon : ''}
           wrapper="div"
           className="iconRight"
           aria-label="iconLabel"
