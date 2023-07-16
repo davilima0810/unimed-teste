@@ -53,15 +53,21 @@ const Input = ({
   return (
     <S.Container>
       <S.Title>{label}</S.Title>
-      <S.InputMaterial placeholder={rest.placeholder} type={rest.type}>
-        {isError && (
+      <S.InputMaterial placeholder={rest.placeholder} type={rest.type} {...rest}>
+        {!!value && (isError ? (
           <ReactSVG
             src={"/assets/icons/x-red.svg"}
             wrapper="div"
             className="iconLeftBtn"
             aria-label="iconLabel"
           />
-        )}
+        ) :
+        <ReactSVG
+            src={"/assets/icons/check-green.svg"}
+            wrapper="div"
+            className="iconLeftBtn"
+            aria-label="iconLabel"
+          /> )}
       </S.InputMaterial>
     </S.Container>
   );

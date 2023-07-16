@@ -4,10 +4,18 @@ export enum Permissao {
 }
 
 export interface User {
-  id: string;
-  nome: string;
+  id: number;
+  name: string;
   email: string;
-  senha: string;
+  password: string;
   permissao: Permissao | string;
   status: boolean;
+}
+
+export interface PayloadUser {
+  name?: string;
+  email?: string;
+  password?: string;
+  permissao?: Permissao | string;
+  status?: boolean;
 }

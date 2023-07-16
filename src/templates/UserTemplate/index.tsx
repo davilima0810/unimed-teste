@@ -13,7 +13,7 @@ import { ReactSVG } from 'react-svg';
 const titles = [
   {
       label: 'Nome',
-      value: 'nome'
+      value: 'name'
   },
   {
       label: 'E-mail',
@@ -73,9 +73,9 @@ const UserTemplate = () => {
       <S.ContainerTable>
         <TablePagination
           customGridStyles={'1.5fr 2fr 1fr 0.6fr 0.4fr'}
-          values={listUsers.map((item) => ({
+          values={listUsers?.map((item) => ({
             ...item,
-            permissao: Permissoes.find((permissao)=> permissao.value === item?.permissao)?.label,
+            permissao: Permissoes?.find((permissao)=> permissao.value === item?.permissao)?.label,
             action: (
               <S.ContainerActions>
                 <S.ButtonActions>

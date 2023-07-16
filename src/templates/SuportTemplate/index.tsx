@@ -7,16 +7,19 @@ const SuportTemplate = () => {
   return (
     <S.Container>
       <S.Title>
-        Sistema de Gestão de Usuários de Plano de Saúde
+        Suporte Técnico Especializado
       </S.Title>
       <S.Text>
-        Nosso Sistema de Gestão de Usuários de Plano de Saúde é uma solução abrangente para gerenciar os usuários de seu plano de saúde de forma eficiente. Com recursos de gestão de usuários, você pode cadastrar, atualizar e excluir beneficiários, mantendo um banco de dados organizado com informações essenciais. Além disso, é possível controlar a cobertura e os planos oferecidos, definindo limites, carências e outros detalhes relacionados à política de benefícios.
+        Bem-vindo(a) ao nosso Suporte Técnico! Estamos aqui para ajudar a garantir que sua experiência com nosso Sistema de Gestão de Usuários de Plano de Saúde seja a melhor possível.
       </S.Text>
       <S.Text>
-        Para garantir que sua experiência seja perfeita, oferecemos suporte técnico especializado. Nossa equipe está pronta para ajudar em todas as etapas do uso do sistema, fornecendo orientações, resolvendo problemas técnicos e respondendo a suas dúvidas. Com nosso suporte ágil e eficiente, você terá a tranquilidade de contar com uma equipe qualificada sempre pronta para ajudar.
+        Nossa equipe de suporte é altamente qualificada e está disponível para atendê-lo(a) em todas as etapas do uso do sistema. Seja para esclarecer dúvidas, resolver problemas técnicos ou fornecer orientações, estamos prontos para ajudar de forma ágil e eficiente.
       </S.Text>
       <S.Text>
-        Experimente hoje mesmo nosso Sistema de Gestão de Usuários de Plano de Saúde e simplifique o processo de gerenciamento de usuários. Tenha controle total sobre seus beneficiários e ofereça um suporte técnico de qualidade. Entre em contato conosco para solicitar uma demonstração ou obter mais informações. Estamos prontos para ser seu parceiro na gestão eficiente do seu plano de saúde.
+        Para obter suporte, entre em contato conosco através dos canais disponíveis e conte-nos como podemos ajudar. Sua satisfação é nossa prioridade, e faremos o possível para garantir que você tenha uma experiência tranquila e produtiva com nossa plataforma.
+      </S.Text>
+      <S.Text>
+        Agradecemos por escolher nosso Sistema de Gestão de Usuários de Plano de Saúde e confiar em nosso suporte técnico especializado. Estamos ansiosos para atendê-lo(a) da melhor maneira possível.
       </S.Text>
     </S.Container>
   );

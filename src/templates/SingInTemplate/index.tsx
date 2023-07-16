@@ -7,41 +7,63 @@ import Image from 'next/image';
 
 import { useRouter } from "next/navigation";
 
+import { login } from "@/services/auth";
+
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { CredencialLogin } from '@/types/credencial';
+import { useDataAuth } from '@/hooks/auth';
+import { PayloadUser } from '@/types/user';
+import { UserService } from '@/services/user';
 
 export default function SingInTemplate() {
   const [registerForm, setRegisterForm] = useState<boolean>(false)
+  const [registerFields, setRegisterFields] = useState<PayloadUser>()
+  const [fieldsLogin, setFieldsLogin] = useState<CredencialLogin>()
+  const [confirmPassword, setConfirmPassword] = useState<string>()
 
   const route = useRouter();
+  const { setDataToken, setData } = useDataAuth();
 
-  const validationSchema = yup.object({
-    email: yup.string().email().required("Email is required"),
-    password: yup.string().required("Password is required"),
-  });
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: () => {
-      // auth(value);
-    },
-    validate: (values) => {
-      const errors = { email: "" };
-      console.log(values)
-      if (!values.email) {
-        errors.email = "Required";
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-        errors.email = "Invalid email address";
-      }
-      console.log(errors)
-      return errors;
-    },
-    validationSchema: validationSchema,
-  });
+  function isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    return emailRegex.test(email);
+  }
+
+  function arePasswordsEqual(password1: string, password2: string): boolean {
+    return password1 !== password2;
+  }
+
+  function isInvalidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    return !emailRegex.test(email);
+  }
+
+  const SubmitLogin = async () => {
+    if (!fieldsLogin?.email || !fieldsLogin?.password ) return
+
+    login({...fieldsLogin, strategy: 'local'})
+      .then(({ data }) =>{
+        setDataToken(data?.accessToken)
+        setData(data?.user)
+        route.push("/dashboard");
+      })
+      .catch((err) => {
+        // console.log(err)
+      })
+  }
+
+  const SubmitRegister = async () => {
+    UserService.post({...registerFields, status: true, permissao: 'customer'})
+    .then((data) => {
+      console.log(data)
+      setRegisterForm(!registerForm)
+    }).then((err) => {
+
+    })
+  }
 
   return (
     <S.Container>
@@ -54,19 +76,31 @@ export default function SingInTemplate() {
               <Input
                 label='E-mail'
                 placeholder='Informe seu e-mail'
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                onError={()=> formik.errors.email }
-                isError={true}
+                value={fieldsLogin?.email}
+                onChange={(e)=>{
+                  setFieldsLogin({...fieldsLogin, email: e?.target?.value });
+                }}
+                isError={fieldsLogin?.email ? isInvalidEmail(fieldsLogin?.email): false}
               />
-              <Input label='Senha' placeholder='Informe sua senha' type='password'/>
+              <Input
+                label='Senha'
+                value={fieldsLogin?.password}
+                onChange={(e)=>{
+                  setFieldsLogin({
+                    ...fieldsLogin,
+                    password: e?.target?.value
+                  });
+                }}
+                placeholder='Informe sua senha'
+                type='password'
+              />
               <Button
                 style={{backgroundColor: "#00995d"}}
                 iconLeft={"/assets/icons/log-in-white.svg"}
                 onClick={()=>{
                   // formik.handleSubmit();
-                  route.push("/dashboard");
+                  // route.push("/dashboard");
+                  SubmitLogin()
                 }}
               >
                 Entrar
@@ -81,13 +115,35 @@ export default function SingInTemplate() {
             </S.Form>
           ) : (
             <S.Form>
-              <Input label='Nome' placeholder='Informe seu nome' />
-              <Input label='E-mail' placeholder='Informe seu e-mail' />
-              <Input label='Senha' placeholder='Informe sua senha' type='password'/>
-              <Input label='Senha' placeholder='Confirme sua senha' type='password'/>
+              <Input
+                value={registerFields?.name}
+                onChange={(e) => {
+                  setRegisterFields({...registerFields, name: e?.target?.value})
+                }}
+                label='Nome' placeholder='Informe seu nome' />
+              <Input
+                value={registerFields?.email}
+                onChange={(e) => {
+                  setRegisterFields({...registerFields, email: e?.target?.value})
+                }}
+                label='E-mail' placeholder='Informe seu e-mail'
+                isError={registerFields?.email ? isInvalidEmail(registerFields?.email): false}
+                />
+              <Input
+                value={registerFields?.password}
+                onChange={(e) => {
+                  setRegisterFields({...registerFields, password: e?.target?.value})
+                }}
+                label='Senha' placeholder='Informe sua senha' type='password'/>
+              <Input
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e?.target?.value)}
+                isError={confirmPassword && registerFields?.password ? arePasswordsEqual(registerFields?.password, confirmPassword) : false}
+                label='Senha' placeholder='Confirme sua senha' type='password'/>
               <Button
                 style={{backgroundColor: "#00995d"}}
                 iconLeft={"/assets/icons/user-check-white.svg"}
+                onClick={() => SubmitRegister()}
               >
                 Cadastrar
               </Button>

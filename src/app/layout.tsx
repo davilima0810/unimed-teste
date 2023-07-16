@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import StyledComponentsRegistry from '../lib/library'
 
 import React from 'react'
+import AuthProvider from '@/context/auth'
+import { AxiosInterceptor } from '@/services/api'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +24,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <StyledComponentsRegistry>
-          {children}
+          {/* <AxiosInterceptor /> */}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </StyledComponentsRegistry>
       </body>
     </html>

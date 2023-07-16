@@ -5,6 +5,10 @@ import StyledComponentsRegistry from '../../lib/library'
 import Sidebar from '@/components/organisms/Sidebar';
 
 import React from 'react'
+import AuthProvider from '@/context/auth';
+import { AxiosInterceptor } from '@/services/api';
+
+import { UserService } from '@/services/user';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,9 +26,12 @@ export default function RootLayout({
         <title>Dashboard - Unimed Teresina</title>
       </head>
       <body className={inter.className}>
-        <StyledComponentsRegistry>
-          <Sidebar>{children}</Sidebar>
-        </StyledComponentsRegistry>
+          <StyledComponentsRegistry>
+              <AxiosInterceptor />
+            <AuthProvider>
+              <Sidebar>{children}</Sidebar>
+            </AuthProvider>
+          </StyledComponentsRegistry>
       </body>
     </html>
   )

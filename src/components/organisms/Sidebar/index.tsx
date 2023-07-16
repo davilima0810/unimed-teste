@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import * as S from './styles';
 import ItemMenu from '@/components/atoms/ItemMenu';
@@ -7,13 +7,17 @@ import { ReactSVG } from 'react-svg';
 
 import { useRouter } from "next/navigation";
 
+import { useDataAuth } from "@/hooks/auth";
+
+import { UserService } from '@/services/user';
 
 const Sidebar = ({
   children
 } : {
-  children: React.ReactNode
+  children: React.ReactNode,
 }) => {
   const route = useRouter();
+  const { dataUser, logout } = useDataAuth();
 
   function formatarData(data: Date): string {
     const diasSemana: string[] = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
@@ -26,6 +30,12 @@ const Sidebar = ({
 
     return `${diaSemana}, ${dia} de ${mes} de ${ano}`;
   }
+
+  useEffect(()=>{
+    UserService.getById(dataUser?.id).then((data) => {
+
+    })
+  },[dataUser?.id])
 
   return (
     <S.Wrapper>
@@ -56,7 +66,7 @@ const Sidebar = ({
               <ItemMenu
                 iconLeftActive='/assets/icons/log-out.svg'
                 iconLeft='/assets/icons/log-out.svg'
-                onClick={()=>route.push("/")}
+                onClick={()=>logout()}
               >
                   Sair
               </ItemMenu>
@@ -77,7 +87,7 @@ const Sidebar = ({
       <S.ContainerRight>
         <S.BarTop>
           <S.DivTitle>
-            <S.Title>Bem Vindo, Davi</S.Title>
+            <S.Title>Bem Vindo, {dataUser?.name}</S.Title>
             <S.SubTitle>{(formatarData(new Date()))}</S.SubTitle>
           </S.DivTitle>
 

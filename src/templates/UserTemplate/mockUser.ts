@@ -1,26 +1,28 @@
-const user1 = {
-  id: '1',
-  nome: 'John Doe',
+import { User } from '@/types/user';
+
+const user1 : User = {
+  id: 1,
+  name: 'John Doe',
   email: 'john.doe@example.com',
-  senha: 'senha123',
+  password: 'senha123',
   permissao: 'admin',
   status: true,
 };
 
-const user2 = {
-  id: '2',
-  nome: 'Jane Smith',
+const user2 :User =  {
+  id: 2,
+  name: 'Jane Smith',
   email: 'jane.smith@example.com',
-  senha: 'password456',
+  password: 'password456',
   permissao: 'customer',
   status: true,
 };
 
-const user3 = {
-  id: '3',
-  nome: 'Bob Johnson',
+const user3 :User = {
+  id: 3,
+  name: 'Bob Johnson',
   email: 'bob.johnson@example.com',
-  senha: 'securePwd789',
+  password: 'securePwd789',
   permissao: 'customer',
   status: false,
 };
