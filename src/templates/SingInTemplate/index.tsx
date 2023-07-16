@@ -9,8 +9,6 @@ import { useRouter } from "next/navigation";
 
 import { login } from "@/services/auth";
 
-import * as yup from "yup";
-import { useFormik } from "formik";
 import { CredencialLogin } from '@/types/credencial';
 import { useDataAuth } from '@/hooks/auth';
 import { PayloadUser } from '@/types/user';
