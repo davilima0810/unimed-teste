@@ -26,7 +26,7 @@ export const ContainerSearch = styled.div`
   flex-wrap: wrap;
   justify-content: flex-end;
   padding-right: 1rem;
-  gap: 1rem
+  gap: 1rem;
 `;
 
 export const ButtonAdd = styled(Button)`
@@ -36,3 +36,18 @@ export const ButtonAdd = styled(Button)`
   margin: 0px;
   background-color: #00995D;
 `
+
+export const ContainerTable = styled.div`
+  width:100%;
+  margin: 2.5rem 0rem;
+`;
+
+export const StatusActive = styled.p`
+  color: #00995D;
+  font-weight: 500;
+`;
+
+export const StatusInactive = styled.p`
+  color: #CC0000;
+  font-weight: 500;
+`;
