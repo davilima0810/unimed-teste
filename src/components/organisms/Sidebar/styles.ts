@@ -23,8 +23,13 @@ export const BarLeft = styled.div`
 `;
 
 export const BarLeftOption = styled.div`
-  height: 50%;
+  height: 100%;
   width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
 `
 
 export const ContainerRight = styled.ul`

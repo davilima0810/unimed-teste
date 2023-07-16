@@ -30,9 +30,8 @@ const Sidebar = ({
   return (
     <S.Wrapper>
       <S.BarLeft>
+        <S.ImageLogo src={"/assets/img/logo_unimed.png"} />
         <S.BarLeftOption>
-          <S.ImageLogo src={"/assets/img/logo_unimed.png"} />
-
           <S.listSidebar>
             <li>
               <ItemMenu
@@ -63,6 +62,16 @@ const Sidebar = ({
               </ItemMenu>
             </li>
           </S.listSidebar>
+          <S.listSidebar>
+          <li>
+            <ItemMenu
+              iconLeftActive='/assets/icons/alert-triangle.svg'
+              iconLeft='/assets/icons/alert-triangle.svg'
+              onClick={()=>route.push("/dashboard/suport")}
+            >
+                Suporte
+            </ItemMenu>
+          </li></S.listSidebar>
         </S.BarLeftOption>
       </S.BarLeft>
       <S.ContainerRight>

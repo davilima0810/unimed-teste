@@ -51,3 +51,25 @@ export const StatusInactive = styled.p`
   color: #CC0000;
   font-weight: 500;
 `;
+
+export const ContainerActions = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+`
+
+export const ButtonActions = styled.button`
+  gap: 1rem;
+  border: none;
+  cursor: pointer;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  justify-content: left;
+  background-color: transparent;
+`
