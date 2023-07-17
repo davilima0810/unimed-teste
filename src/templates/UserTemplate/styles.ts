@@ -73,3 +73,47 @@ export const ButtonActions = styled.button`
   justify-content: left;
   background-color: transparent;
 `
+
+export const ContainerModal = styled.div`
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin: 2rem 0rem;
+
+  .icon svg{
+    width: 9.2rem;
+    height: 9.2rem;
+  }
+`;
+
+export const TextModal = styled.h3`
+  font-size: 1.8rem;
+  font-weight: 500;
+`;
+
+export const ContainerButtons = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  margin: 2rem 0rem;
+`
+export const ButtonConfirm = styled(Button)`
+  width: 255px;
+  padding: 0px;
+  border-radius: 5rem;
+  margin: 0px;
+  background-color: #00995D;
+`
+
+export const ButtonCancel = styled(Button)`
+  width: 135px;
+  padding: 0px;
+  border-radius: 5rem;
+  margin: 0px;
+  background-color: #E5304F;
+`

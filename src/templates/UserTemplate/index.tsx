@@ -7,9 +7,12 @@ import TablePagination from '@/components/molecules/TablePagination';
 import { User } from '@/types/user';
 import usersArray from './mockUser';
 import { IPagination } from '@/types/pagination';
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { ReactSVG } from 'react-svg';
 import { UserService } from '@/services/user';
+import Modal from '@/components/molecules/Modal';
+import Alert from '@/components/atoms/Alert';
+import { alertProps } from '@/types/alert';
 
 const titles = [
   {
@@ -41,17 +44,38 @@ const Permissoes = [
 
 const UserTemplate = () => {
   const [listUsers, setListUsers] = useState<User[]>()
+  const [selectUsersId, setSelectUsersId] = useState<number>()
+  const [message, setMessage] = useState<alertProps>({ message: '', typeAlert: ''})
+  const [isOpen, setIsOpen] = useState(false)
   const [numberPage, setNumberPage] = useState(0)
   const [pagination, setPagination] = useState<IPagination>();
 
+  const params = useSearchParams()
   const route = useRouter();
+
 
   const tablePaginationProps = {
     titles,
     pagination
   }
 
-  useEffect(()=>{
+  const handleOpenModal = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const handleDeleteUser = () => {
+    if(!selectUsersId) return
+
+    UserService.delete(selectUsersId).then((data)=>{
+      setMessage({ message:"Usuário excluído com sucesso!", typeAlert: 'success'})
+      LoadingData()
+      handleOpenModal()
+    }).catch((err)=>{
+      setMessage({ message:"Erro ao excluir usuário!", typeAlert: 'danger'})
+    })
+  }
+
+  const LoadingData = () => {
     UserService.get().then(({ data }) =>{
       setListUsers(data?.data);
       setPagination({
@@ -62,12 +86,24 @@ const UserTemplate = () => {
         setNumberPage: setNumberPage
       })
     }).catch((err)=>{
-
+      setMessage({ message:"Erro ao carregar usuários!", typeAlert: 'danger'})
     })
+  }
+
+  useEffect(()=>{
+    LoadingData();
+  },[])
+
+  useEffect(()=>{
+    params.get('messageAlert')
+
+    setMessage({ message: params?.get('messageAlert') || '', typeAlert: params.get('typeMessage') || ''})
+
   },[])
 
   return (
     <S.Container>
+      {message && (<Alert alertType={message.typeAlert} onClose={setMessage}>{message.message}</Alert>)}
       <S.TopContainer>
         <S.Title>
           Usuários
@@ -88,7 +124,11 @@ const UserTemplate = () => {
             permissao: Permissoes?.find((permissao)=> permissao.value === item?.permissao)?.label,
             action: (
               <S.ContainerActions>
-                <S.ButtonActions>
+                <S.ButtonActions
+                  onClick={() => {
+                    route.push(`/dashboard/users/edit/${item?.id}`)
+                  }}
+                >
                   <ReactSVG
                     src={'/assets/icons/edit.svg'}
                     wrapper="div"
@@ -96,7 +136,12 @@ const UserTemplate = () => {
                     aria-label="iconLabel"
                   />
                 </S.ButtonActions>
-                <S.ButtonActions>
+                <S.ButtonActions
+                  onClick={() => {
+                    setSelectUsersId(item?.id)
+                    handleOpenModal()
+                  }}
+                >
                   <ReactSVG
                     src={'/assets/icons/trash-2.svg'}
                     wrapper="div"
@@ -114,6 +159,29 @@ const UserTemplate = () => {
           isLoading={false}
         />
       </S.ContainerTable>
+      <Modal isOpen={isOpen} onClose={handleOpenModal} >
+        <S.ContainerModal>
+          <ReactSVG
+            src={'/assets/icons/alert-triangle-orange.svg'}
+            wrapper="div"
+            className="icon"
+            aria-label="iconLabel"
+          />
+          <S.TextModal>
+            Deseja realmente excluir o usuário?
+          </S.TextModal>
+
+          <S.ContainerButtons>
+            <S.ButtonConfirm
+              iconLeft={'/assets/icons/trash-2-white.svg'}
+              onClick={handleDeleteUser}
+            >Sim, excluir usuário!</S.ButtonConfirm>
+            <S.ButtonCancel
+              onClick={handleOpenModal}
+            >Cancelar</S.ButtonCancel>
+          </S.ContainerButtons>
+        </S.ContainerModal>
+      </Modal>
     </S.Container>
   );
 }

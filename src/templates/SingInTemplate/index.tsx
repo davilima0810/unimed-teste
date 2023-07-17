@@ -14,12 +14,16 @@ import { useDataAuth } from '@/hooks/auth';
 import { PayloadUser } from '@/types/user';
 import { UserService } from '@/services/user';
 import { NumberUtils } from '@/utils/numberUtils';
+import Alert from '@/components/atoms/Alert';
+import { alertProps } from '@/types/alert';
 
 export default function SingInTemplate() {
   const [registerForm, setRegisterForm] = useState<boolean>(false)
   const [registerFields, setRegisterFields] = useState<PayloadUser>()
   const [fieldsLogin, setFieldsLogin] = useState<CredencialLogin>()
   const [confirmPassword, setConfirmPassword] = useState<string>()
+
+  const [message, setMessage] = useState<alertProps>({ message: '', typeAlert: ''})
 
   const route = useRouter();
   const { setDataToken, setDataUser } = useDataAuth();
@@ -34,16 +38,17 @@ export default function SingInTemplate() {
         route.push("/dashboard");
       })
       .catch((err) => {
-
+        setMessage({ message:"Erro ao fazer login!", typeAlert: 'danger'})
       })
   }
 
   const SubmitRegister = async () => {
     UserService.post({...registerFields, status: true, permissao: 'customer'})
     .then((data) => {
+      setMessage({ message:"Usuário cadastrado com sucesso!", typeAlert: 'success'})
       setRegisterForm(!registerForm)
-    }).then((err) => {
-
+    }).catch((err) => {
+      setMessage({ message:"Erro ao concluir cadastro!", typeAlert: 'danger'})
     })
   }
 
@@ -55,6 +60,8 @@ export default function SingInTemplate() {
         <S.ContainerForm>
           {!registerForm ? (
             <S.Form>
+              {(message?.message)
+              && (<Alert alertType={message.typeAlert} onClose={setMessage}>{message.message}</Alert>)}
               <Input
                 label='E-mail'
                 placeholder='Informe seu e-mail'
@@ -97,6 +104,9 @@ export default function SingInTemplate() {
             </S.Form>
           ) : (
             <S.Form>
+              {
+              message?.message
+              && (<Alert alertType={message.typeAlert} onClose={setMessage}>{message.message}</Alert>)}
               <Input
                 value={registerFields?.name}
                 onChange={(e) => {

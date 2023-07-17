@@ -22,10 +22,13 @@ export const InputMaterial = styled(InputChildren)`
   text-align: left;
   text-indent: 1.5rem;
 
-  .iconLeftBtn{
-    margin-left: 1.5rem;
+  svg{
+    /* margin-left: 1.5rem; */
 
-    margin-top: 4px;
+    margin-right: 5rem;
+
+    /* margin-top: 4px; */
+    /* position: relative; */
   }
 
   ::-webkit-input-placeholder {
@@ -38,7 +41,7 @@ export const InputMaterial = styled(InputChildren)`
     text-align: left;
   }
 
-  &:hover, &::selection {
+  &:hover {
     border: 1px solid #838383;
   }
 

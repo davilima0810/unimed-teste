@@ -39,7 +39,7 @@ export const InputMaterial = styled.select`
     text-align: left;
   }
 
-  &:hover, &::selection {
+  &:hover {
     border: 1px solid #838383;
   }
 

@@ -16,11 +16,11 @@ export class UserService {
     });
   }
 
-  static async update(id: number, data: PayloadUser): Promise<AxiosResponse<User>> {
-    return api.put(baseUrl + `/${id}`, data);
+  static async update(id: number, data: PayloadUser): Promise<User> {
+    return api.patch(baseUrl + `/${id}`, data);
   }
 
-  static async getById(id: number): Promise<AxiosResponse<User>> {
+  static async getById(id: number): Promise<User> {
     return await api
       .get(`${baseUrl}/${id}`)
       .then((response) => {
@@ -40,5 +40,9 @@ export class UserService {
       .catch((error) => {
         return error;
       });
+  }
+
+  static async delete(id: number): Promise<User> {
+    return api.delete(baseUrl + `/${id}`);
   }
 }

@@ -60,6 +60,7 @@ const Input = ({
             wrapper="div"
             className="iconLeftBtn"
             aria-label="iconLabel"
+            style={{marginRight: 10}}
           />
         ) :
         <ReactSVG
@@ -67,6 +68,7 @@ const Input = ({
             wrapper="div"
             className="iconLeftBtn"
             aria-label="iconLabel"
+            style={{marginRight: 10}}
           /> )}
       </S.InputMaterial>
     </S.Container>
