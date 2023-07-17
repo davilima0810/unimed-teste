@@ -12,6 +12,7 @@ import { useDataAuth } from "@/hooks/auth";
 import { UserService } from '@/services/user';
 import { User } from '@/types/user';
 
+
 const Sidebar = ({
   children
 } : {
@@ -32,11 +33,31 @@ const Sidebar = ({
     return `${diaSemana}, ${dia} de ${mes} de ${ano}`;
   }
 
+  const menuItems = [
+    {
+      label: 'Home',
+      iconLeftActive: '/assets/icons/home-active.svg',
+      iconLeft: '/assets/icons/home-active.svg',
+      active: true,
+      onClick: () => route.push('/dashboard'),
+    },
+    {
+      label: 'Usuários',
+      iconLeftActive: '/assets/icons/user.svg',
+      iconLeft: '/assets/icons/user.svg',
+      onClick: () => route.push('/dashboard/users'),
+    },
+    {
+      label: 'Sair',
+      iconLeftActive: '/assets/icons/log-out.svg',
+      iconLeft: '/assets/icons/log-out.svg',
+      onClick: logout, // Certifique-se de ter a função logout definida no escopo do componente.
+    },
+  ];
+
+
   // useEffect(()=>{
   //   if(!dataUser?.id) return
-
-  //   console.log(userData)
-  //   // console.log(dataUser)
   //   UserService.getById(dataUser?.id).then(({ data }) => {
   //     setUserData(data)
   //   })
@@ -48,34 +69,21 @@ const Sidebar = ({
         <S.ImageLogo src={"/assets/img/logo_unimed.png"} />
         <S.BarLeftOption>
           <S.listSidebar>
-            <li>
-              <ItemMenu
-                iconLeftActive='/assets/icons/home-active.svg'
-                iconLeft='/assets/icons/home-active.svg'
-                active={true}
-                onClick={()=>route.push("/dashboard")}
-              >
-                Home
-              </ItemMenu>
-            </li>
-            <li>
-              <ItemMenu
-                iconLeftActive='/assets/icons/user.svg'
-                iconLeft='/assets/icons/user.svg'
-                onClick={()=>route.push("/dashboard/users")}
-              >
-                  Usuários
-              </ItemMenu>
-            </li>
-            <li>
-              <ItemMenu
-                iconLeftActive='/assets/icons/log-out.svg'
-                iconLeft='/assets/icons/log-out.svg'
-                onClick={()=>logout()}
-              >
-                  Sair
-              </ItemMenu>
-            </li>
+          {menuItems.map((item, index) => (
+            item.label === 'Usuários'
+            && dataUser?.permissao !== 'admin' ? null : (
+              <li key={index}>
+                <ItemMenu
+                  iconLeftActive={item.iconLeftActive}
+                  iconLeft={item.iconLeft}
+                  active={item.active}
+                  onClick={item.onClick}
+                >
+                  {item.label}
+                </ItemMenu>
+              </li>
+            )
+          ))}
           </S.listSidebar>
           <S.listSidebar>
           <li>

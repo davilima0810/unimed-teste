@@ -77,7 +77,6 @@ const AddEditUserTemplate = ({ id }: { id?: string }) => {
     if (!id) return
 
     UserService.getById(parseInt(id)).then((data) =>{
-      console.log(data)
       setRegisterFields(data)
     }).catch((err)=>{
       setMessage({ message:"Erro ao carregar usuário!", typeAlert: 'danger'})
