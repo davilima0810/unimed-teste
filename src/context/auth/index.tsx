@@ -15,19 +15,19 @@ const AuthProvider = ({ children }: StateProviderProps) => {
   const [dataToken, setDataToken, removeDataToken] =
     useStorage(localStorageToken);
 
-  const [data, setData, removeData] = useStorage(localStorageAplicationData)
+  const [dataUser, setDataUser, removeDataUser] = useStorage(localStorageAplicationData)
 
   function logout() {
     removeDataToken();
-    removeData();
+    removeDataUser();
     router.push("/");
   }
   return (
     <AuthContext.Provider
       value={{
-        data,
-        setData,
-        removeData,
+        dataUser,
+        setDataUser,
+        removeDataUser,
         dataToken,
         setDataToken,
         removeDataToken,

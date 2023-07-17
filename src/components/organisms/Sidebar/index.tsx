@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import * as S from './styles';
 import ItemMenu from '@/components/atoms/ItemMenu';
@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useDataAuth } from "@/hooks/auth";
 
 import { UserService } from '@/services/user';
+import { User } from '@/types/user';
 
 const Sidebar = ({
   children
@@ -31,11 +32,15 @@ const Sidebar = ({
     return `${diaSemana}, ${dia} de ${mes} de ${ano}`;
   }
 
-  useEffect(()=>{
-    UserService.getById(dataUser?.id).then((data) => {
+  // useEffect(()=>{
+  //   if(!dataUser?.id) return
 
-    })
-  },[dataUser?.id])
+  //   console.log(userData)
+  //   // console.log(dataUser)
+  //   UserService.getById(dataUser?.id).then(({ data }) => {
+  //     setUserData(data)
+  //   })
+  // },[dataUser?.id])
 
   return (
     <S.Wrapper>

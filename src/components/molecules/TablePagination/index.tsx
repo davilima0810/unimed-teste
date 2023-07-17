@@ -24,7 +24,7 @@ type Props = {
     titles: Title[]
     pagination?: Pagination
 
-    values: Array<any>
+    values?: any[]
 
     customGridStyles?: string
     emptyText?: string
@@ -37,7 +37,7 @@ type Props = {
 function TablePagination({
     pagination,
     titles,
-    values,
+    values = [],
     customGridStyles,
     emptyText = 'Nenhum resultado encontrado',
     isLoading = false,
@@ -114,10 +114,10 @@ function TablePagination({
                     <S.HeaderContentDemands>
                         <div className="tabs-demands-right">
                             <p>
-                                {NumberUtils.maskNumberInt(((pagination?.paginaAtual + 1) * pagination?.linhasPorPagina - values.length || 0) + 1)} -{' '}
+                                {NumberUtils.maskNumberInt(((pagination?.paginaAtual + 1) * pagination?.linhasPorPagina - values?.length || 0) + 1)} -{' '}
                                 {NumberUtils.maskNumberInt(
                                     pagination?.paginaAtual * pagination?.linhasPorPagina +
-                                        values.length +
+                                        values?.length +
                                         (pagination?.paginaAtual + 1 === pagination?.totalPaginas ? 0 : 1)
                                 )}
                                 {' de '}

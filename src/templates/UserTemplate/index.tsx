@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import * as S from './styles';
 import InputSearch from '@/components/molecules/InputSearch';
@@ -9,6 +9,7 @@ import usersArray from './mockUser';
 import { IPagination } from '@/types/pagination';
 import { useRouter } from "next/navigation";
 import { ReactSVG } from 'react-svg';
+import { UserService } from '@/services/user';
 
 const titles = [
   {
@@ -39,15 +40,9 @@ const Permissoes = [
 ]
 
 const UserTemplate = () => {
-  const [listUsers, setListUsers] = useState<User[]>(usersArray)
+  const [listUsers, setListUsers] = useState<User[]>()
   const [numberPage, setNumberPage] = useState(0)
-  const [pagination, setPagination] = useState<IPagination>({
-      totalRegistros: 100,
-      totalPaginas: 10,
-      linhasPorPagina: 10,
-      paginaAtual: 3,
-      setNumberPage: setNumberPage
-  });
+  const [pagination, setPagination] = useState<IPagination>();
 
   const route = useRouter();
 
@@ -55,6 +50,21 @@ const UserTemplate = () => {
     titles,
     pagination
   }
+
+  useEffect(()=>{
+    UserService.get().then(({ data }) =>{
+      setListUsers(data?.data);
+      setPagination({
+        totalRegistros: data?.total,
+        linhasPorPagina: data?.limit,
+        paginaAtual: data?.skip,
+        totalPaginas: (data?.total % data?.limit)+1,
+        setNumberPage: setNumberPage
+      })
+    }).catch((err)=>{
+
+    })
+  },[])
 
   return (
     <S.Container>
@@ -73,7 +83,7 @@ const UserTemplate = () => {
       <S.ContainerTable>
         <TablePagination
           customGridStyles={'1.5fr 2fr 1fr 0.6fr 0.4fr'}
-          values={listUsers?.map((item) => ({
+          values={listUsers?.length ? listUsers?.map((item) => ({
             ...item,
             permissao: Permissoes?.find((permissao)=> permissao.value === item?.permissao)?.label,
             action: (
@@ -99,7 +109,7 @@ const UserTemplate = () => {
             status: item?.status
                     ? <S.StatusActive>Ativo</S.StatusActive>
                     : <S.StatusInactive>Inativo</S.StatusInactive>
-          }))}
+          })) : []}
           {...tablePaginationProps}
           isLoading={false}
         />

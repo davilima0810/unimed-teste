@@ -23,15 +23,8 @@ export interface IPagination {
 }
 
 export interface IPageResult<T> {
-    content: T[]
-    empty: boolean
-    first: boolean
-    last: boolean
-    number: number
-    numberOfElements: number
-    pageable: IPageable
-    size: number
-    sort: ISort
-    totalElements: number
-    totalPages: number
+    data: T[]
+    total: number,
+	limit: number,
+	skip:  number
 }

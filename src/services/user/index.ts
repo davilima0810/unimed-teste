@@ -1,6 +1,7 @@
 import { User, PayloadUser } from "@/types/user";
 import { AxiosResponse } from "axios";
 import { api } from "../api/api";
+import { IPageResult } from "@/types/pagination";
 
 const baseUrl = "/users";
 
@@ -30,11 +31,11 @@ export class UserService {
       });
   }
 
-  static async get(id: number): Promise<AxiosResponse<User>> {
+  static async get(): Promise<AxiosResponse<IPageResult<User>>> {
     return await api
-      .get(`/pessoas`)
+      .get(`${baseUrl}`)
       .then((response) => {
-        return response.data;
+        return response;
       })
       .catch((error) => {
         return error;

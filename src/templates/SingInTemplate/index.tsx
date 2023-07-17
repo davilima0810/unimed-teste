@@ -21,7 +21,7 @@ export default function SingInTemplate() {
   const [confirmPassword, setConfirmPassword] = useState<string>()
 
   const route = useRouter();
-  const { setDataToken, setData } = useDataAuth();
+  const { setDataToken, setDataUser } = useDataAuth();
 
   function isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,7 +45,7 @@ export default function SingInTemplate() {
     login({...fieldsLogin, strategy: 'local'})
       .then(({ data }) =>{
         setDataToken(data?.accessToken)
-        setData(data?.user)
+        setDataUser(data?.user)
         route.push("/dashboard");
       })
       .catch((err) => {
