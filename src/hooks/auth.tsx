@@ -8,8 +8,6 @@ function useDataAuth(): any {
     throw new Error("useToast must be used within a ToastProvider");
   }
 
-  console.log(context)
-
   return context;
 }
 

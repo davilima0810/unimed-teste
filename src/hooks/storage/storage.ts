@@ -2,14 +2,14 @@ import Cookie from "js-cookie";
 
 const storage = {
   set: (key: string, value: string) => {
-    // console.log('set')
+
   },
   get: (key: string) => {
-    // console.log('get')
+
   },
   remove: (key: string) => {
-    // console.log('remove')
-    // console.log('remove')
+
+
   },
 };
 

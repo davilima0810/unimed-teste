@@ -49,14 +49,13 @@ export default function SingInTemplate() {
         route.push("/dashboard");
       })
       .catch((err) => {
-        // console.log(err)
+
       })
   }
 
   const SubmitRegister = async () => {
     UserService.post({...registerFields, status: true, permissao: 'customer'})
     .then((data) => {
-      console.log(data)
       setRegisterForm(!registerForm)
     }).then((err) => {
 

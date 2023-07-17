@@ -22,7 +22,6 @@ const AxiosInterceptor = () => {
   }, [])
 
   useEffect(() => {
-    // console.log("path !== /login", path !== "/login");
     const localToken = localStorage.getItem(localStorageToken);
     if (path !== "/") {
       apis.forEach((api) => {
@@ -31,7 +30,7 @@ const AxiosInterceptor = () => {
         if (localToken) {
           token = localToken.replaceAll('"', "");
         }
-        // console.log(`Bearer ${token}`);
+
         api.interceptors.request.use((config: any) => {
           config.headers.Authorization = `Bearer ${token}`;
           return config;
