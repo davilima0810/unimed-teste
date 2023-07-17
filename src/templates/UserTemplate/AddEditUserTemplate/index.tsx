@@ -1,11 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 import * as S from "./styles";
 import Input from "@/components/molecules/Input";
 import Select from "@/components/molecules/Select";
 import Button from "@/components/atoms/Button";
 import { useRouter } from "next/navigation";
+import { UserService } from "@/services/user";
+import { PayloadUser } from "@/types/user";
+import { NumberUtils } from "@/utils/numberUtils";
 
 type AsyncSimpleSelectOption = {
   label: string
@@ -26,32 +29,90 @@ const titlesPermissao : AsyncSimpleSelectOption[] = [
 const titlesStatus : AsyncSimpleSelectOption[] = [
   {
       label: 'Ativo',
-      value: true
+      value: 'ativo'
   },
   {
       label: 'Inativo',
-      value: false
+      value: 'inativo'
   }
 ]
 
 const AddEditUserTemplate = ({ id }: { id?: string }) => {
+  const [registerFields, setRegisterFields] = useState<PayloadUser>()
+  const [confirmPassword, setConfirmPassword] = useState<string>()
   const route = useRouter();
+
+  const handleSubmit = () => {
+    if(!registerFields) return
+
+    if(id){
+
+    }else{
+      UserService.post(registerFields).then((data) =>{
+        //Alert Positivo
+        route.push("/dashboard/users")
+      }).catch((err)=>{
+        //Alert Negativo
+      })
+    }
+  }
 
   return (
     <S.Container>
       <S.Title>
         Cadastrar usuário {id}
       </S.Title>
-      <Input label="Nome"/>
-      <Input label="E-mail"/>
-      <Input type="password" label="Senha"/>
-      <Input type="password" label="Confirme sua senha"/>
+      <Input
+        onChange={(e) => {
+          setRegisterFields({...registerFields, name: e?.target.value })
+        }}
+        value={registerFields?.name}
+        label="Nome"/>
+      <Input
+        onChange={(e) => {
+          setRegisterFields({...registerFields, email: e?.target.value })
+        }}
+        isError={registerFields?.email ? NumberUtils.isInvalidEmail(registerFields?.email): false}
+        value={registerFields?.email}
+        label="E-mail"/>
+      <Input
+        onChange={(e) => {
+          setRegisterFields({...registerFields, password: e?.target.value })
+        }}
+        value={registerFields?.password}
+        type="password"
+        label="Senha"/>
+      <Input
+        value={confirmPassword}
+        isError={confirmPassword && registerFields?.password ? NumberUtils.arePasswordsEqual(registerFields?.password, confirmPassword) : false}
+        onChange={(e) => {
+          setConfirmPassword(e?.target?.value)
+        }}
+        type="password"
+        label="Confirme sua senha"/>
       <S.ContainerProps>
         <S.ContainerGrid>
-          <Select label="Permissão" placeholder="Permissão" listProps={titlesPermissao}></Select>
+          <Select
+            onChange={(e) => {
+              setRegisterFields({...registerFields, permissao: e?.target?.value })
+            }}
+            value={registerFields?.permissao}
+            label="Permissão"
+            placeholder="Permissão"
+            initialValue={ 'customer' }
+            listProps={titlesPermissao}
+            ></Select>
         </S.ContainerGrid>
         <S.ContainerGrid>
-          <Select label="Status" placeholder="Status" listProps={titlesStatus}></Select>
+          <Select
+            onChange={(e) => {
+              setRegisterFields({...registerFields, status: e?.target?.value  === 'ativo' ? true : false })
+            }}
+            value={ registerFields?.status ? 'ativo' : 'inativo' }
+            label="Status"
+            placeholder="Status"
+            listProps={titlesStatus}
+            ></Select>
         </S.ContainerGrid>
       </S.ContainerProps>
       <S.ContainerButtons>
@@ -65,7 +126,9 @@ const AddEditUserTemplate = ({ id }: { id?: string }) => {
         <Button
           style={{backgroundColor: "#00995d"}}
           iconLeft={"/assets/icons/user-check-white.svg"}
-          onClick={()=> route.push("/dashboard/users")}
+          onClick={()=> {
+            handleSubmit()
+          }}
         >
           Cadastrar
         </Button>

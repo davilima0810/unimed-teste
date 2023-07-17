@@ -9,6 +9,16 @@ export class NumberUtils {
 
         return value?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     }
+
+    static arePasswordsEqual = (password1: string, password2: string): boolean => {
+        return password1 !== password2;
+      }
+
+    static isInvalidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    return !emailRegex.test(email);
+    }
 }
 
 

@@ -13,6 +13,7 @@ import { CredencialLogin } from '@/types/credencial';
 import { useDataAuth } from '@/hooks/auth';
 import { PayloadUser } from '@/types/user';
 import { UserService } from '@/services/user';
+import { NumberUtils } from '@/utils/numberUtils';
 
 export default function SingInTemplate() {
   const [registerForm, setRegisterForm] = useState<boolean>(false)
@@ -22,22 +23,6 @@ export default function SingInTemplate() {
 
   const route = useRouter();
   const { setDataToken, setDataUser } = useDataAuth();
-
-  function isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    return emailRegex.test(email);
-  }
-
-  function arePasswordsEqual(password1: string, password2: string): boolean {
-    return password1 !== password2;
-  }
-
-  function isInvalidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    return !emailRegex.test(email);
-  }
 
   const SubmitLogin = async () => {
     if (!fieldsLogin?.email || !fieldsLogin?.password ) return
@@ -77,7 +62,7 @@ export default function SingInTemplate() {
                 onChange={(e)=>{
                   setFieldsLogin({...fieldsLogin, email: e?.target?.value });
                 }}
-                isError={fieldsLogin?.email ? isInvalidEmail(fieldsLogin?.email): false}
+                isError={fieldsLogin?.email ? NumberUtils.isInvalidEmail(fieldsLogin?.email): false}
               />
               <Input
                 label='Senha'
@@ -124,7 +109,7 @@ export default function SingInTemplate() {
                   setRegisterFields({...registerFields, email: e?.target?.value})
                 }}
                 label='E-mail' placeholder='Informe seu e-mail'
-                isError={registerFields?.email ? isInvalidEmail(registerFields?.email): false}
+                isError={registerFields?.email ? NumberUtils.isInvalidEmail(registerFields?.email): false}
                 />
               <Input
                 value={registerFields?.password}
@@ -135,7 +120,7 @@ export default function SingInTemplate() {
               <Input
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e?.target?.value)}
-                isError={confirmPassword && registerFields?.password ? arePasswordsEqual(registerFields?.password, confirmPassword) : false}
+                isError={confirmPassword && registerFields?.password ? NumberUtils.arePasswordsEqual(registerFields?.password, confirmPassword) : false}
                 label='Senha' placeholder='Confirme sua senha' type='password'/>
               <Button
                 style={{backgroundColor: "#00995d"}}

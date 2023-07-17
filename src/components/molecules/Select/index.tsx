@@ -2,14 +2,14 @@ import React from 'react';
 
 import * as S from './styles';
 
-import { InputHTMLAttributes, useEffect, useState } from "react";
+import { SelectHTMLAttributes, useEffect, useState } from "react";
 
 type AsyncSimpleSelectOption = {
   label: string
   value: any
 }
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   assistiveText?: string;
   disabled?: boolean;
   iconLeft?: any;
@@ -55,11 +55,15 @@ const Select = ({
   initialValue,
   maxLength,
   ...rest
-}: InputProps) => {
+}: SelectProps) => {
   return (
     <S.Container>
       <S.Title>{label}</S.Title>
-      <S.InputMaterial placeholder={rest.placeholder}>
+      <S.InputMaterial {...rest}>
+          <option
+            value=''
+            >
+          </option>
         {listProps?.map((item)=>{
           return (
             <option
